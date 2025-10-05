@@ -1,0 +1,23 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as mtp
+
+data = pd.read_csv ("50_Startups.csv")
+x = data.iloc [:,:-1].values
+y = data.iloc [:,-1].values
+
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+ct= ColumnTransformer (transformers = [('encoder', OneHotEncoder (drop = 'first'), [3])], remainder = 'passthrough')
+x=ct.fit_transform(x)
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split (x,y,test_size=0.3, random_state=0)
+
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(x_train,y_train)
+y_pred = regressor.predict(x_test)
+
+print("Training Set ", regressor.score(x_train,y_train))
+print("Testing Set ", regressor.score(x_test,y_test))

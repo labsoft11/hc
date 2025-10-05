@@ -1,0 +1,8 @@
+import numpy as np
+from sklearn import preprocessing
+laben=preprocessing.LabelEncoder()
+inputclass=['rcb','rcb','csk','mi','lsg','mi','kkr']
+laben.fit(inputclass)
+print("class mapping:")
+for i,item in enumerate(laben.classes_):
+    print(item,'--> ',i)
